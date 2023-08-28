@@ -40,9 +40,8 @@ class GitHubServiceTest {
         // given
         String name = "mciapski";
         List<GitHubRepositoriesDto> testList = gitHubService.getAllUserRepositories(name);
-        // then expext
+        // then expect
         assertThat(testList).isNotNull();
-
     }
 
     @Test
@@ -73,22 +72,5 @@ class GitHubServiceTest {
         // then
         assertThat(expectedList).isEqualTo(List.of(new GitHubRepositoriesDto("test2", new GitHubRepositoriesDto.Owner("test2"), false)));
     }
-
-//    @Test
-//    void shouldMapObjectToGitHubEntityObject() {
-//        // given
-//        GitHubRepositoriesDto firstElement = new GitHubRepositoriesDto("test1", new GitHubRepositoriesDto.Owner("test1"), true);
-//        GitHubRepositoriesDto secondElement = new GitHubRepositoriesDto("test2", new GitHubRepositoriesDto.Owner("test2"), false);
-//        GitHubRepositoriesDto thirdElement = new GitHubRepositoriesDto("test3", new GitHubRepositoriesDto.Owner("test3"), false);
-//        List<GitHubRepositoriesDto> allReposList = List.of(firstElement, secondElement, thirdElement);
-//
-//        // when
-//        List<GitHubEntity> resultList = gitHubService.mapToEntityObject(allReposList);
-//
-//        // then
-//        assertThat(allReposList).isEqualTo(resultList);
-//
-//    }
-
 
 }
