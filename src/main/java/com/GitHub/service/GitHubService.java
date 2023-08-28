@@ -24,12 +24,15 @@ public class GitHubService {
     private final RestTemplate restTemplate;
 
     public List<GitHubRepositoriesDto> getAllUserRepositories(String name) {
+        if (Objects.equals(name, null)) {
+            throw new IllegalArgumentException(" Input name is null");
+        }
         URI uri = UriComponentsBuilder.fromHttpUrl("https://api.github.com/users/" + name + "/repos")
                 .build().toUri();
-            ResponseEntity<GitHubRepositoriesDto[]> responseEntity =
-                    restTemplate.getForEntity(uri, GitHubRepositoriesDto[].class);
-            GitHubRepositoriesDto[] repoArray = responseEntity.getBody();
-            return List.of(repoArray);
+        ResponseEntity<GitHubRepositoriesDto[]> responseEntity =
+                restTemplate.getForEntity(uri, GitHubRepositoriesDto[].class);
+        GitHubRepositoriesDto[] repoArray = responseEntity.getBody();
+        return List.of(repoArray);
     }
 
     public List<GitHubRepositoriesDto> getAllNotForkedRepositories(List<GitHubRepositoriesDto> allRepos) {
@@ -58,6 +61,7 @@ public class GitHubService {
         if (inputList.isEmpty()) {
             throw new NullPointerException("Input list is empty");
         }
+
         List<GitHubEntity> resultList = new ArrayList<>();
 
         for (int i = 0; i < inputList.size(); i++) {
