@@ -14,6 +14,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,22 +62,28 @@ public class GitHubService {
         if (inputList.isEmpty()) {
             throw new NullPointerException("Input list is empty");
         }
-
         List<GitHubEntity> resultList = new ArrayList<>();
-
-        for (int i = 0; i < inputList.size(); i++) {
+        inputList.forEach(element -> {
             GitHubEntity gitHubEntity = new GitHubEntity();
-            if (!Objects.equals(inputList.get(i).getRepositoryName(), null)) {
-                gitHubEntity.setRepositoryName(inputList.get(i).getRepositoryName());
-            }
-            if (!Objects.equals(inputList.get(i).getOwner().getLogin(), null)) {
-                gitHubEntity.setOwnerLogin(inputList.get(i).getOwner().getLogin());
-            }
-            if (!getAllBranchesForRepository(inputList.get(i)).isEmpty()) {
-                gitHubEntity.setBranches(getAllBranchesForRepository(inputList.get(i)));
-            }
+            gitHubEntity.setRepositoryName(element.getRepositoryName());
+            gitHubEntity.setOwnerLogin(element.getOwner().getLogin());
+            gitHubEntity.setBranches(getAllBranchesForRepository(element));
             resultList.add(gitHubEntity);
-        }
+        });
+
+//        for (int i = 0; i < inputList.size(); i++) {
+//            GitHubEntity gitHubEntity = new GitHubEntity();
+//            if (!Objects.equals(inputList.get(i).getRepositoryName(), null)) {
+//                gitHubEntity.setRepositoryName(inputList.get(i).getRepositoryName());
+//            }
+//            if (!Objects.equals(inputList.get(i).getOwner().getLogin(), null)) {
+//                gitHubEntity.setOwnerLogin(inputList.get(i).getOwner().getLogin());
+//            }
+//            if (!getAllBranchesForRepository(inputList.get(i)).isEmpty()) {
+//                gitHubEntity.setBranches(getAllBranchesForRepository(inputList.get(i)));
+//            }
+//            resultList.add(gitHubEntity);
+//        }
         return resultList;
     }
 
