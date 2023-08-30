@@ -18,11 +18,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class GitHubService {
 
-    @Autowired
+
     private final RestTemplate restTemplate;
+
+    public GitHubService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public List<GitHubRepositoriesDto> getAllUserRepositories(String name) {
         if (Objects.equals(name, null)) {
@@ -70,20 +73,6 @@ public class GitHubService {
             gitHubEntity.setBranches(getAllBranchesForRepository(element));
             resultList.add(gitHubEntity);
         });
-
-//        for (int i = 0; i < inputList.size(); i++) {
-//            GitHubEntity gitHubEntity = new GitHubEntity();
-//            if (!Objects.equals(inputList.get(i).getRepositoryName(), null)) {
-//                gitHubEntity.setRepositoryName(inputList.get(i).getRepositoryName());
-//            }
-//            if (!Objects.equals(inputList.get(i).getOwner().getLogin(), null)) {
-//                gitHubEntity.setOwnerLogin(inputList.get(i).getOwner().getLogin());
-//            }
-//            if (!getAllBranchesForRepository(inputList.get(i)).isEmpty()) {
-//                gitHubEntity.setBranches(getAllBranchesForRepository(inputList.get(i)));
-//            }
-//            resultList.add(gitHubEntity);
-//        }
         return resultList;
     }
 
